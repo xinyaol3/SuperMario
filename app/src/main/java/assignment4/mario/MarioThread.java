@@ -5,31 +5,32 @@ import android.view.SurfaceHolder;
 
 public class MarioThread extends Thread {
 		
-	final Board board1;
-	final SurfaceHolder sh1;
-	boolean gamestillrunning1 = true;
+	final Board boardl;
+	final SurfaceHolder shl;
+	boolean gamestillrunningl = true;
 	
 	public MarioThread(SurfaceHolder sh, Board board) {
-		this.board1 = board;
-		this.sh1 = sh;
+		this.boardl = board;
+		this.shl = sh;
 	}
 	
 	@Override
 	public void run() {			
-		while(gamestillrunning1) {
+		while(gamestillrunningl) {
 			
-    		board1.updateWorld();
+    		boardl.updateWorld();
 
-			Canvas c=sh1.lockCanvas();
+			Canvas c=shl.lockCanvas();
 			
 			if (c!=null) {
-				board1.draw(c);
-				sh1.unlockCanvasAndPost(c);
+				boardl.draw(c);
+				shl.unlockCanvasAndPost(c);
 			}	
 		}		
 	}
+	
 
 	public synchronized void stopGame() {
-		gamestillrunning1 = false;
+		gamestillrunningl = false;
 	}	
 }

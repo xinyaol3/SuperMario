@@ -3,34 +3,35 @@ package assignment4.mario;
 import android.graphics.Rect;
 
 public class Cannon {
-	static final int vx1 = 26, shootRange1 = 1601;
-	int xCannonball1 = 0, yCannonball1 = 0;
-	boolean LR1 = false, dead1 = false;
-	Rect cndst1 = new Rect();
-	Rect cnbdst1 = new Rect();
+	static final int vxl = 25, shootRangel = 1600;
+	int xCannonballl = 0, yCannonball = 0;
+	boolean LRl = false, deadl = false;
+	Rect cndstl = new Rect();	// Cannon
+	Rect cnbdstl = new Rect();	// Cannon Ball
 	
 	public void move(Rect mdst, int xTileIni) {
-
-		if ((cndst1.exactCenterX() > mdst.exactCenterX()) &&
-			(cndst1.exactCenterX()-mdst.exactCenterX()) <= Board.xScreen1) {
-			LR1 = false;
-		} else if ((cndst1.exactCenterX() < mdst.exactCenterX()) &&
-				((cndst1.exactCenterX()-mdst.exactCenterX()) >= -Board.xScreen1)) {
-			LR1 = true;
+		// Cannon
+		if ((cndstl.exactCenterX() > mdst.exactCenterX()) &&
+			(cndstl.exactCenterX()-mdst.exactCenterX()) <= Board.xScreenl) {
+			LRl = false;
+		} else if ((cndstl.exactCenterX() < mdst.exactCenterX()) &&
+				((cndstl.exactCenterX()-mdst.exactCenterX()) >= -Board.xScreenl)) {
+			LRl = true;
 		} else
-			xCannonball1 = 0;
-
-		if (dead1) {
-			xCannonball1 = 0;
-			dead1 = false;
-		} else if (!dead1) {
-			if ((cnbdst1.exactCenterX() > xTileIni+shootRange1) ||
-					(cnbdst1.exactCenterX() < xTileIni-shootRange1)) {
-				xCannonball1 = 0;
-			} else if (LR1)
-				xCannonball1 = xCannonball1 + vx1;
-			else if (!LR1)
-				xCannonball1 = xCannonball1 - vx1;
+			xCannonballl = 0;
+		
+		// Cannon Ball
+		if (deadl) {
+			xCannonballl = 0;
+			deadl = false;
+		} else if (!deadl) {
+			if ((cnbdstl.exactCenterX() > xTileIni+shootRangel) ||
+					(cnbdstl.exactCenterX() < xTileIni-shootRangel)) {
+				xCannonballl = 0;
+			} else if (LRl)
+				xCannonballl = xCannonballl + vxl;
+			else if (!LRl)
+				xCannonballl = xCannonballl - vxl;
 		}
 		
 

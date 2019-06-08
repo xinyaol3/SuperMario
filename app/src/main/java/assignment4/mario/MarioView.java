@@ -8,11 +8,13 @@ import android.view.SurfaceView;
 
 public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	
-	private Board board1;
-	private MarioThread mt11, mt21;
-
+	private Board boardl;
+	private MarioThread mt1l, mt2l;
+		
+	// Background
 	Bitmap background=BitmapFactory.decodeResource(getResources(), R.drawable.background);
 
+	// Regular Mario
 	Bitmap mariodead=BitmapFactory.decodeResource(getResources(), R.drawable.mario_dead);
 	Bitmap marioSL=BitmapFactory.decodeResource(getResources(), R.drawable.mario_stand_left);
 	Bitmap marioSR=BitmapFactory.decodeResource(getResources(), R.drawable.mario_stand_right);
@@ -22,7 +24,8 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	Bitmap marioRR2=BitmapFactory.decodeResource(getResources(), R.drawable.mario_run_right2);
 	Bitmap marioJL=BitmapFactory.decodeResource(getResources(), R.drawable.mario_jump_left);
 	Bitmap marioJR=BitmapFactory.decodeResource(getResources(), R.drawable.mario_jump_right);
-
+	
+	// Big Mario
 	Bitmap bigmarioSL=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_stand_left);
 	Bitmap bigmarioSR=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_stand_right);
 	Bitmap bigmarioRL1=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_run_left1);
@@ -31,7 +34,8 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	Bitmap bigmarioRR2=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_run_right2);
 	Bitmap bigmarioJL=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_jump_left);
 	Bitmap bigmarioJR=BitmapFactory.decodeResource(getResources(), R.drawable.bigmario_jump_right);
-
+	
+	// Golden Mario
 	Bitmap goldmarioSL=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_stand_left);
 	Bitmap goldmarioSR=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_stand_right);
 	Bitmap goldmarioRL1=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_run_left1);
@@ -40,7 +44,8 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	Bitmap goldmarioRR2=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_run_right2);
 	Bitmap goldmarioJL=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_jump_left);
 	Bitmap goldmarioJR=BitmapFactory.decodeResource(getResources(), R.drawable.goldmario_jump_right);
-
+	
+	// Axe Mario
 	Bitmap axemarioSL=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_stand_left);
 	Bitmap axemarioSR=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_stand_right);
 	Bitmap axemarioRL1=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_run_left1);
@@ -49,7 +54,8 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	Bitmap axemarioRR2=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_run_right2);
 	Bitmap axemarioJL=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_jump_left);
 	Bitmap axemarioJR=BitmapFactory.decodeResource(getResources(), R.drawable.axemario_jump_right);
-
+	
+	// Enemies
 	Bitmap enemyMushroomW1=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_mushroom_walk1);
 	Bitmap enemyMushroomW2=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_mushroom_walk2);
 	Bitmap enemyMushroomD=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_mushroom_dead);
@@ -61,11 +67,13 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 	Bitmap enemyCannon=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_cannon);
 	Bitmap enemyCannonballL=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_cannonball_left);
 	Bitmap enemyCannonballR=BitmapFactory.decodeResource(getResources(), R.drawable.enemy_cannonball_right);
-
+	
+	// Blocks
 	Bitmap breakable=BitmapFactory.decodeResource(getResources(), R.drawable.block_breakable);
 	Bitmap unbreakable=BitmapFactory.decodeResource(getResources(), R.drawable.block_unbreakable);
 	Bitmap question=BitmapFactory.decodeResource(getResources(), R.drawable.block_question);
-
+	
+	// Item
 	Bitmap mushroom=BitmapFactory.decodeResource(getResources(), R.drawable.item_bigmario);
 	Bitmap greenMushroom=BitmapFactory.decodeResource(getResources(), R.drawable.item_greenmushroom);
 	Bitmap star1=BitmapFactory.decodeResource(getResources(), R.drawable.item_star1);
@@ -86,27 +94,27 @@ public class MarioView extends SurfaceView implements SurfaceHolder.Callback  {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		board1 = new Board(this);
-		setOnTouchListener(board1);
-		mt11 = new MarioThread(this.getHolder(), board1);
-		mt21 = new MarioThread(this.getHolder(), board1);
-		mt11.start();
+		boardl = new Board(this);
+		setOnTouchListener(boardl);
+		mt1l = new MarioThread(this.getHolder(), boardl);
+		mt2l = new MarioThread(this.getHolder(), boardl);
+		mt1l.start();
 		System.out.println("Mario Thread1 Started!");
-		mt21.start();
+		mt2l.start();
 		System.out.println("Mario Thread2 Started!");
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		mt11.stopGame();
-		mt21.stopGame();
+		mt1l.stopGame();
+		mt2l.stopGame();
 		try {
-			mt11.join();
+			mt1l.join();
 			System.out.println("Mario Thread1 Terminated!");
-			System.out.println("Mario Thread1 is alvie: "+mt11.isAlive());
-			mt21.join();
+			System.out.println("Mario Thread1 is alvie: "+mt1l.isAlive());
+			mt2l.join();
 			System.out.println("Mario Thread2 Terminated!");
-			System.out.println("Mario Thread2 is alvie: "+mt21.isAlive());
+			System.out.println("Mario Thread2 is alvie: "+mt2l.isAlive());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		

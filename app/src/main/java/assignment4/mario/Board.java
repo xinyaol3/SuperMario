@@ -8,87 +8,93 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+
 public class Board implements OnTouchListener {
 
-	private MarioView mv1;
-	Mario mario1;
-	Level lv1;
-	final int MAX_X1, MAX_Y1;
-	final static int MAX_TILE_X1 = 41, MAX_TILE_Y1 = 11;
-	static int i, dx1, marioTransform1, level1, lifeCount1, score1, tileDimension1, xScreen1, yScreen1;
-	private int xBoard1, count1, collisionType1 = 0, touchx1 = 1001, touchy1 = 1001;
-	static boolean touch1, move1, jump1, fall1, goLeft1, goRight1, goJump1, dead1;
-	private int placement1[][];
-	private Tile tile1[][];
-	Paint textPaint1 = new Paint();
-	Paint gameover1 = new Paint();
+	private MarioView mvl;
+	Mario mariol;
+	Level lvl;
+	final int MAX_Xl, MAX_Yl;
+	final static int MAX_TILE_Xl = 40, MAX_TILE_Yl = 10;
+	static int i, dxl, marioTransforml, levell, lifeCountl, scorel, tileDimensionl, xScreenl, yScreenl;
+	private int xBoardl, countl, collisionTypel = 0, touchxl = 1000, touchyl = 1000;
+	static boolean touchl, movel, jumpl, falll, goLeftl, goRightl, goJumpl, deadl;
+	private int placementl[][];
+	private Tile tilel[][];
+	Paint textPaintl = new Paint();
+	Paint gameoverl = new Paint();
 
-	private static Rect dst1 = new Rect();
-	private static Rect mdst1=	new Rect();
+	private static Rect dst = new Rect();		// General use
+	private static Rect mdst=	new Rect();		// Mario
 
 	public Board(MarioView mv) {		
-		this.mv1 = mv;
-		Board.level1 = MainActivity.level;
-		tileDimension1 = mv.getHeight() / MAX_TILE_Y1;
-		MAX_X1 = tileDimension1 * MAX_TILE_X1;
-		MAX_Y1 = tileDimension1 * MAX_TILE_Y1;
-		xScreen1 = mv.getWidth();
-		yScreen1 = mv.getHeight();
-
+		this.mvl = mv;
+		Board.levell = MainActivity.levell;
+		tileDimensionl = mv.getHeight() / MAX_TILE_Yl;
+		MAX_Xl = tileDimensionl * MAX_TILE_Xl;
+		MAX_Yl = tileDimensionl * MAX_TILE_Yl;
+		xScreenl = mv.getWidth();
+		yScreenl = mv.getHeight();
+		//Display values for debugging
 		System.out.println("Screen  Width  = " + mv.getWidth());
 		System.out.println("Screen Height  = " + mv.getHeight());
-		System.out.println("Max  Width  = " + MAX_X1);
-		System.out.println("Max Height  = " + MAX_Y1);
-		System.out.println("Tile Dimension = " + tileDimension1);
+		System.out.println("Max  Width  = " + MAX_Xl);
+		System.out.println("Max Height  = " + MAX_Yl);
+		System.out.println("Tile Dimension = " + tileDimensionl);
 		//
-		placement1 = new int[MAX_TILE_Y1][MAX_TILE_X1];
-		lv1 = new Level(level1);
-		lv1.levelBuild(placement1);
-		tile1 = new Tile[MAX_TILE_Y1][MAX_TILE_X1];
-		for (int row = 0; row < MAX_TILE_Y1; row++) {
-			for (int col = 0; col < MAX_TILE_X1; col++) {
-				if (placement1[row][col] != 0)
-					tile1[row][col] = new Tile( row, col, tileDimension1);
+		placementl = new int[MAX_TILE_Yl][MAX_TILE_Xl];
+		lvl = new Level(levell);
+		lvl.levelBuild(placementl);
+		tilel = new Tile[MAX_TILE_Yl][MAX_TILE_Xl];
+		for (int row = 0; row < MAX_TILE_Yl; row++) {
+			for (int col = 0; col < MAX_TILE_Xl; col++) {
+				if (placementl[row][col] != 0)
+					tilel[row][col] = new Tile( row, col, tileDimensionl);
+
 			}
 		}
-		mario1 = new Mario();
-		move1 = false;
-		jump1 = false;
-		fall1 = true;
-		dead1 = false;
-		xBoard1 = 0;
-		count1 = 0;
-		dx1 = 0;
-		score1 = 0;
-		lifeCount1 = 10;
+		
 
+		mariol = new Mario();
+		movel = false;
+		jumpl = false;
+		falll = true;
+		deadl = false;
+		xBoardl = 0;
+		countl = 0;
+		dxl = 0;
+		scorel = 0;
+		lifeCountl = 10;
+		///////////////////////////////
 		System.out.println("Game Board Built!");
 	}
 	
 	public void draw(Canvas c) {
-		dst1.set(xBoard1 - dx1, 0, MAX_X1 - dx1, MAX_Y1);
-		c.drawBitmap(mv1.background, null, dst1, null);
-		dst1.set(0, 0, tileDimension1*4/5, tileDimension1*4/5);
-		c.drawBitmap(mv1.mariodead, null, dst1, null);
-		textPaint1.setColor(Color.YELLOW);
-		textPaint1.setTextSize(50);
-		c.drawText(" X "+ lifeCount1, tileDimension1, tileDimension1*2/3, textPaint1);
-		c.drawText("Score : "+ score1, 7*tileDimension1, tileDimension1*2/3, textPaint1);
-		c.drawText("Level : "+ level1, 13*tileDimension1, tileDimension1*2/3, textPaint1);
-
-		for (int row = 0; row < MAX_TILE_Y1; row++) {
-			for (int col = 0; col < MAX_TILE_X1; col++) {
-				if (placement1[row][col] != 0)
-					tile1[row][col].draw(c, placement1, mv1, dx1);
+		dst.set(xBoardl - dxl, 0, MAX_Xl - dxl, MAX_Yl);
+		c.drawBitmap(mvl.background, null, dst, null);
+		dst.set(0, 0, tileDimensionl*4/5, tileDimensionl*4/5);
+		c.drawBitmap(mvl.mariodead, null, dst, null);
+		textPaintl.setColor(Color.YELLOW);
+		textPaintl.setTextSize(50);
+		c.drawText(" X "+ lifeCountl, tileDimensionl, tileDimensionl*2/3, textPaintl);
+		c.drawText("Score : "+ scorel, 7*tileDimensionl, tileDimensionl*2/3, textPaintl);
+		c.drawText("Level : "+ levell, 13*tileDimensionl, tileDimensionl*2/3, textPaintl);
+		
+		// Drawing items and enemies
+		for (int row = 0; row < MAX_TILE_Yl; row++) {
+			for (int col = 0; col < MAX_TILE_Xl; col++) {
+				if (placementl[row][col] != 0)
+					tilel[row][col].draw(c, placementl, mvl, dxl);
 			}
 		}
-
-		mario1.draw(move1, jump1, marioTransform1, mdst1, tileDimension1, touchx1, touchy1, c, mv1);
 		
-		gameover1.setColor(Color.RED);
-		gameover1.setTextSize(101);
-		if (lifeCount1 == 0 && dead1)
-			c.drawText("GAME OVER !!", 6*tileDimension1, 6*tileDimension1, gameover1);
+		// Drawing Mario
+		mariol.draw(movel, jumpl, marioTransforml, mdst, tileDimensionl, touchxl, touchyl, c, mvl);
+		
+		gameoverl.setColor(Color.RED);
+		gameoverl.setTextSize(100);
+		if (lifeCountl == 0 && deadl)
+			c.drawText("GAME OVER !!", 5*tileDimensionl, 5*tileDimensionl, gameoverl);
 	}
 	
 	@Override
@@ -97,133 +103,136 @@ public class Board implements OnTouchListener {
 	    case MotionEvent.ACTION_MOVE:
 	    case MotionEvent.ACTION_DOWN:
 	    	synchronized (this) {
-	    		touchx1 = (int)event.getX();
-	    		touchy1 = (int)event.getY();
-	    		move1 = true;
+	    		touchxl = (int)event.getX();
+	    		touchyl = (int)event.getY();
+	    		movel = true;
 	    	}	    	
 	    	return true;
 	    case MotionEvent.ACTION_UP:
-	    	move1 = false;
+	    	movel = false;
 	    	return true;		    	
 		}		
 		return false;
 	}
 
 	public void updateWorld() {
-
+		// Check life and transformation
 		synchronized (this) {
 			checkLife();
 		}
-
-		if (move1 && !dead1) {
-			if (touchx1 >= (xScreen1/2) && touchy1 <= (yScreen1*4/5)) {
-				if (goRight1) {
-					if(Mario.xMario1 < xScreen1*4/7)
+		// Movement of Mario
+		if (movel && !deadl) {
+			if (touchxl >= (xScreenl/2) && touchyl <= (yScreenl*4/5)) {
+				if (goRightl) {
+					if(Mario.xMariol < xScreenl*4/7)
 						Mario.goRight();
-					else if (dx1 < (MAX_X1 - xScreen1 - Mario.vx1))
-						dx1 = dx1 + Mario.vx1;
-					else if (Mario.xMario1 < (xScreen1 - tileDimension1))
+					else if (dxl < (MAX_Xl - xScreenl - Mario.vxl))
+						dxl = dxl + Mario.vxl;
+					else if (Mario.xMariol < (xScreenl - tileDimensionl))
 						Mario.goRight();
 				}
 			}
-			if (touchx1 <  (xScreen1/2) && touchy1 <= (yScreen1*4/5)) {
-				if (goLeft1) {
-					if(Mario.xMario1 > xScreen1*3/7)
+			if (touchxl <  (xScreenl/2) && touchyl <= (yScreenl*4/5)) {
+				if (goLeftl) {
+					if(Mario.xMariol > xScreenl*3/7)
 						Mario.goLeft();	
-					else if (dx1 > 0)
-						dx1 = dx1 - Mario.vx1;
-					else if (Mario.xMario1 > 0)
+					else if (dxl > 0)
+						dxl = dxl - Mario.vxl;
+					else if (Mario.xMariol > 0)
 						Mario.goLeft();
 				}
 			}
 	   				   		
-			if ((touchx1 > xScreen1/2) && (touchy1 > yScreen1*4/5) && touch1) {
-	   			jump1 = true;
-	   			touch1 = false;
+			if ((touchxl > xScreenl/2) && (touchyl > yScreenl*4/5) && touchl) {
+	   			jumpl = true;
+	   			touchl = false;
 			}
    		}
    		   		
-   		if (jump1 && goJump1) {
-   			jump1 = mario1.jump(count1);
-   			count1++;
-  		} else if (fall1) {
-   			mario1.gravity();
-   		} else if (!fall1) {
-   			touch1 = true;
-   			count1 = 0;
+   		if (jumpl && goJumpl) {
+   			jumpl = mariol.jump(countl);
+   			countl++;
+  		} else if (falll) {
+   			mariol.gravity();
+   		} else if (!falll) {
+   			touchl = true;
+   			countl = 0;
    		}
+		
 
-   		collisionType1 = 0;
-		for (int row = 0; row < MAX_TILE_Y1; row++) {
-			for (int col = 0; col < MAX_TILE_X1; col++) {
-				if (placement1[row][col] != 0) {
-					tile1[row][col].moveObjects(placement1, mdst1, dx1);
-						if (collisionType1 == 0)
-							collisionType1 = tile1[row][col].checkCollision(collisionType1, placement1, mdst1, dx1);
+   		collisionTypel = 0;
+		for (int row = 0; row < MAX_TILE_Yl; row++) {
+			for (int col = 0; col < MAX_TILE_Xl; col++) {
+				if (placementl[row][col] != 0) {
+					tilel[row][col].moveObjects(placementl, mdst, dxl);
+						if (collisionTypel == 0)
+							collisionTypel = tilel[row][col].checkCollision(collisionTypel, placementl, mdst, dxl);
 				}
 			}
 		}
+		
+
 	}
 
 	private void checkLife() {
 
-		switch(collisionType1) {
-		case 0:
-			goLeft1 = true;
-			goRight1 = true;
-			goJump1 = true;
-			fall1 = true;
+		switch(collisionTypel) {
+		case 0: // While in the air
+			goLeftl = true;
+			goRightl = true;
+			goJumpl = true;
+			falll = true;
 			break;
 		case 1:
-			goLeft1 = true;
-			goRight1 = false;
-			goJump1 = true;
-			fall1 = true;
+			goLeftl = true;
+			goRightl = false;
+			goJumpl = true;
+			falll = true;
 			break;
 		case 2:
-			goLeft1 = false;
-			goRight1 = true;
-			goJump1 = true;
-			fall1 = true;
+			goLeftl = false;
+			goRightl = true;
+			goJumpl = true;
+			falll = true;
 			break;
 		case 3:
-			goLeft1 = true;
-			goRight1 = true;
-			goJump1 = true;
-			fall1 = false;
+			goLeftl = true;
+			goRightl = true;
+			goJumpl = true;
+			falll = false;
 			break;
 		case 4:
-			goLeft1 = true;
-			goRight1 = true;
-			goJump1 = false;
-			fall1 = true;
-			count1 = 1000000;
+			goLeftl = true;
+			goRightl = true;
+			goJumpl = false;
+			falll = true;
+			countl = 1000000;
 			break;
 		case 5:
-			goLeft1 = true;
-			goRight1 = true;
-			jump1 = true;
-			goJump1 = true;
-			fall1 = false;
+			goLeftl = true;
+			goRightl = true;
+			jumpl = true;
+			goJumpl = true;
+			falll = false;
 			System.out.println(i);
-			score1 += 450;
+			scorel += 450;
 			break;
 		case 6:
-			goLeft1 = false;
-			goRight1 = false;
-			goJump1 = false;
+			goLeftl = false;
+			goRightl = false;
+			goJumpl = false;
 			if (i%2 == 1) {
-				if (marioTransform1 > 2)
-					marioTransform1 = 2;
-				else if (marioTransform1 > 1)
-					marioTransform1 = 1;
-				else if (marioTransform1 == 1) {
-					lifeCount1--;
-					if (lifeCount1 > 0)
-						mario1 = new Mario();
+				if (marioTransforml > 2)
+					marioTransforml = 2;
+				else if (marioTransforml > 1)
+					marioTransforml = 1;
+				else if (marioTransforml == 1) {
+					lifeCountl--;
+					if (lifeCountl > 0)
+						mariol = new Mario();
 					else {
-						goJump1 = true;
-						jump1 = true;
+						goJumpl = true;
+						jumpl = true;
 					}
 				}
 			}
@@ -231,11 +240,11 @@ public class Board implements OnTouchListener {
 			System.out.println(i);
 			break;
 		}
-		if (i == 101)
+		if (i == 100)
 			i=0;
-		if (lifeCount1 == 0) {
-			marioTransform1 = 0;
-			dead1 = true;
+		if (lifeCountl == 0) {
+			marioTransforml = 0;
+			deadl = true;
 		}
 	}
 

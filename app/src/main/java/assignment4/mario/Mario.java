@@ -5,32 +5,32 @@ import android.graphics.Rect;
 
 public class Mario {
 	
-	static int xMario1, yMario1;
-	static final int vx1 = 17, vy1 = 23, jumpHeight1 = 5*Board.tileDimension1;
-	static boolean rise1;
+	static int xMariol, yMariol;
+	static final int vxl = 18, vyl = 24, jumpHeightl = 4*Board.tileDimensionl;
+	static boolean risel;
 	static int i = 0;
 	
 	public Mario() {
-		xMario1 = 3*Board.tileDimension1;
-		yMario1 = 9*Board.tileDimension1;
-		Board.marioTransform1 = 1;
-		Board.dx1 = 0;
+		xMariol = 2*Board.tileDimensionl;
+		yMariol = 8*Board.tileDimensionl; //Ground level
+		Board.marioTransforml = 1;
+		Board.dxl = 0;
 	}
 	
 	public static void goRight() {		
-		xMario1 = xMario1 + vx1;
+		xMariol = xMariol + vxl;
 	}
 
 	public static void goLeft() {		
-		xMario1 = xMario1 - vx1;
+		xMariol = xMariol - vxl;
 	}
 	
 	public boolean jump(int count) {
-		if (vy1*count <= jumpHeight1) {
-			rise1 = true;
-			yMario1 = yMario1 - vy1;
+		if (vyl*count <= jumpHeightl) {	// Jump up
+			risel = true;
+			yMariol = yMariol - vyl;
 		} else {
-			rise1 = false;
+			risel = false;
 			return false;
 		}
 		
@@ -38,23 +38,23 @@ public class Mario {
 	}
 	
 	public void gravity() {
-			yMario1 = yMario1 + vy1;
+			yMariol = yMariol + vyl;
 	}
 
 	public void draw(boolean move, boolean jump, int marioTransform, Rect mdst,
 			int tileDimension, int touchx, int touchy, Canvas c, MarioView mv) {		
-		i++;	if (i == 100)	i = 0;
+		i++;	if (i == 100)	i = 0;	//Reset counter for animation
 
 		switch(marioTransform) {
 		// Dead
 		case 0:
-			mdst.set(xMario1, yMario1, xMario1 + tileDimension, yMario1 + tileDimension);
+			mdst.set(xMariol, yMariol, xMariol + tileDimension, yMariol + tileDimension);
 			c.drawBitmap(mv.mariodead, null, mdst, null);
 			break;
-
+		// Regular small Mario
 		case 1:
-			mdst.set(xMario1, yMario1, xMario1 + tileDimension, yMario1 + tileDimension);
-			if (touchx < (Board.xScreen1/2)) {
+			mdst.set(xMariol, yMariol, xMariol + tileDimension, yMariol + tileDimension);
+			if (touchx < (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.marioRL1, null, mdst, null);
@@ -66,7 +66,7 @@ public class Mario {
 					c.drawBitmap(mv.marioSL, null, mdst, null);	
 			}
 				
-			if (touchx >= (Board.xScreen1/2)) {
+			if (touchx >= (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.marioRR1, null, mdst, null);
@@ -78,10 +78,10 @@ public class Mario {
 					c.drawBitmap(mv.marioSR, null, mdst, null);
 			}
 			break;
-
+		// Big Mario after eating mushroom
 		case 2:
-			mdst.set(xMario1, yMario1 - tileDimension, xMario1 + tileDimension, yMario1 + tileDimension);
-			if (touchx < (Board.xScreen1/2)) {
+			mdst.set(xMariol, yMariol - tileDimension, xMariol + tileDimension, yMariol + tileDimension);
+			if (touchx < (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.bigmarioRL1, null, mdst, null);
@@ -93,7 +93,7 @@ public class Mario {
 					c.drawBitmap(mv.bigmarioSL, null, mdst, null);	
 			}
 				
-			if (touchx >= (Board.xScreen1/2)) {
+			if (touchx >= (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.bigmarioRR1, null, mdst, null);
@@ -105,10 +105,10 @@ public class Mario {
 					c.drawBitmap(mv.bigmarioSR, null, mdst, null);
 			}
 			break;
-
+		// Golden Super Mario after eating star
 		case 3:
-			mdst.set(xMario1, yMario1 - tileDimension, xMario1 + tileDimension, yMario1 + tileDimension);
-			if (touchx < (Board.xScreen1/2)) {
+			mdst.set(xMariol, yMariol - tileDimension, xMariol + tileDimension, yMariol + tileDimension);
+			if (touchx < (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.goldmarioRL1, null, mdst, null);
@@ -120,7 +120,7 @@ public class Mario {
 					c.drawBitmap(mv.goldmarioSL, null, mdst, null);	
 			}
 				
-			if (touchx >= (Board.xScreen1/2)) {
+			if (touchx >= (Board.xScreenl/2)) {
 				if (move && !jump) {
 					if (i%2 == 0)
 						c.drawBitmap(mv.goldmarioRR1, null, mdst, null);

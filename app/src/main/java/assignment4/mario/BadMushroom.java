@@ -3,21 +3,21 @@ package assignment4.mario;
 import android.graphics.Rect;
 
 public class BadMushroom {
-	static final int vx1 = 13, vy1 = 0;
-	int xBMushroom1 = 0, yBmushroom1 = 0;
-	boolean LR1 = false, dead1 = false;
-	Rect bmdst1 = new Rect();
+	static final int vxl = 12, vyl = 0;
+	int xBMushrooml = 0, yBmushrooml = 0;
+	boolean LRl = false, deadl = false;
+	Rect bmdstl = new Rect();	// Bad Mushroom
 	
 	public void move() {
-		if (!dead1) {
-			if (LR1) {
-				xBMushroom1 = xBMushroom1 + vx1;
-				if (xBMushroom1 >= 2*Board.tileDimension1)
-					LR1 = false;
-			} else if (!LR1){
-				xBMushroom1 = xBMushroom1 - vx1;
-				if (xBMushroom1 <= -2*Board.tileDimension1)
-					LR1 = true;
+		if (!deadl) {
+			if (LRl) {
+				xBMushrooml = xBMushrooml + vxl;
+				if (xBMushrooml >= 2*Board.tileDimensionl)
+					LRl = false;
+			} else if (!LRl){
+				xBMushrooml = xBMushrooml - vxl;
+				if (xBMushrooml <= -2*Board.tileDimensionl)
+					LRl = true;
 			}
 		}
 	}

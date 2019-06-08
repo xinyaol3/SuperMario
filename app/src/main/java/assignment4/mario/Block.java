@@ -5,29 +5,30 @@ import android.graphics.Rect;
 import java.util.Random;
 
 public class Block {
-	public int xItem1 = 0, yItem1 = 0, index1, count1;
-	static final int vx1 = 0, vy1 = 13;
-	boolean pop1 = false, used1 = false, stop1 = false;
-	Rect brkdst1 = new Rect();
-	Rect unbrkdst1 = new Rect();
-	Rect quesdst1 = new Rect();
-	Rect itmdst1 = new Rect();
-	Random r1 = new Random();
+	public int xIteml = 0, yIteml = 0, indexl, countl;
+	static final int vxl = 0, vyl = 12;
+	boolean popl = false, usedl = false, stopl = false;
+	Rect brkdstl = new Rect();
+	Rect unbrkdstl = new Rect();
+	Rect quesdstl = new Rect();
+	Rect itmdstl = new Rect();
+	Random rl = new Random();
+	
 
 	public int popItem() {
-		pop1 = true;
+		popl = true;
 		
-		index1 = r1.nextInt(3);
-		return index1;
+		indexl = rl.nextInt(3);
+		return indexl;
 	}
 	
 	public void moveItem() {
-		if (vy1*count1 <= Board.tileDimension1) {
-			count1++;
-			yItem1 = yItem1 - vy1;
-			stop1 = false;
+		if (vyl*countl <= Board.tileDimensionl) {
+			countl++;
+			yIteml = yIteml - vyl;
+			stopl = false;
 		} else
-			stop1 = true;
+			stopl = true;
 	}
 
 }
